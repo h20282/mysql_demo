@@ -25,7 +25,11 @@ public:
     bool Connect(const char *server, const char *user, const char *password, const char *database){
         conn_ = mysql_init(nullptr);
         mysql_set_character_set(conn_, kMysqlCharset);
-        return mysql_real_connect(conn_, server, user, password, database, 0, NULL, 0);
+        bool res = mysql_real_connect(conn_, server, user, password, database, 0, NULL, 0);
+        if (!res) {
+            cout << "connect failed" << endl;
+        }
+        return res;
     }
 
     /* return nullptr if failed*/
